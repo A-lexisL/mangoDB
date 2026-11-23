@@ -6,21 +6,38 @@ mangoDB is a C++20 simple in-memory database. It reads a stream of commands, sch
 
 ## Basic Structure
 
-The pyramid groups the main code layers, with higher layers using lower-level services.
-
-```text
-                                           src/main.cpp
-                                QueryManager     ThreadPoolManager
-                    InputReader    QueryDispatcher   OutputBuffer   ThreadPool
-            QueryParser    QueryBuilders    QueryRunner    TaskQueue   CompletionQueue
-        Task      WholeTask     ScanTask     ApplyTask     TaskResult     Concrete Queries
-    Query        ComplexQuery        QueryResult        Database       Table       Row Proxies
-src/utils/*           C++ streams          containers          synchronization          exceptions
+```mermaid
+flowchart TB
+    subgraph Main["Main thread"]
+        Reader["InputReader<br/>batch input and parsing"]
+        Manager["QueryManager<br/>input, dependencies, and output"]
+        Dispatcher["QueryDispatcher<br/>resource reservations"]
+        PoolManager["ThreadPoolManager<br/>plan Tasks and combine results"]
+        Output["OutputBuffer<br/>Query ID order"]
+    end
+    subgraph Shared["Shared objects"]
+        Tasks["TaskQueue"]
+        Done["CompletionQueue"]
+        DB["Database and Table"]
+    end
+    subgraph Pool["ThreadPool: worker threads"]
+        Runner["QueryRunner<br/>execute one Task"]
+    end
+    Reader -->|"parsed Queries"| Manager
+    Manager -->|"admit and complete Queries"| Dispatcher
+    Dispatcher -->|"ready Queries"| Manager
+    Manager -->|"transfer Query ownership"| PoolManager
+    PoolManager -->|"Tasks"| Tasks
+    Tasks -->|"fetch work"| Runner
+    Runner -.->|"whole operation or assigned range"| DB
+    Runner -->|"TaskResults"| Done
+    Done -->|"available results"| PoolManager
+    PoolManager -->|"grow workers"| Pool
+    PoolManager -->|"completed Queries"| Manager
+    Manager -->|"buffer and flush"| Output
+    style Main fill:#e8f5ef,color:#000
+    style Pool fill:#fff4df,color:#000
 ```
-
-`Query::split()` provides the TaskPlan construction interface; Tasks depend on
-Query parameters for execution. The modules therefore are not a strictly
-one-way dependency chain.
 
 The main thread manages input, Query dependencies, Task phases, and ordered output. Worker threads execute Tasks and return owned partial results.
 
