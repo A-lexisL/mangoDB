@@ -1,0 +1,6 @@
+Checks: 'clang-diagnostic-*,clang-analyzer-*,misc-*,-misc-no-recursion,modernize-*,performance-*,readability-*,bugprone-*,cppcoreguidelines-*,portability-*,codequality-*'
+WarningsAsErrors: '*'
+HeaderFilterRegex: '.*'
+CheckOptions:
+  readability-function-size.LineThreshold: '150'
+  readability-function-cognitive-complexity.Threshold: '25'

@@ -1,0 +1,31 @@
+# Ignore everything
+**
+
+# hidden repo confs
+!.git*
+
+!README.md
+!Makefile
+!CHANGELOG.md
+!CMakeLists.txt
+!CPPLINT.cfg
+!.clang*
+
+!src/
+!src/*/
+!src/**/*/
+!src/**/*.cpp
+!src/**/*.h
+
+!test/
+!test/*.sh
+!test/*.py
+!test/custom/
+!test/custom/db/
+!test/custom/db/*.tbl
+!test/custom/dump/
+!test/custom/dump/*.tbl
+!test/custom/queries/
+!test/custom/queries/*.query
+!test/custom/stdout/
+!test/custom/stdout/*.out
