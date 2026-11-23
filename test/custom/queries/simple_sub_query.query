@@ -1,0 +1,6 @@
+LOAD db/small.tbl;
+SUB ( c1 c2 c3 ) FROM small WHERE ( c0 = -267 );
+SUB ( c1 c2 c3 c4 ) FROM small WHERE ( c0 = 500 );
+SUB ( c1 c2 ) FROM small WHERE ( c0 = 179 );
+DUMP small tmp/sub_after.tbl;
+QUIT;

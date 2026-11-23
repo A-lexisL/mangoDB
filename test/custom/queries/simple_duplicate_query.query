@@ -1,0 +1,12 @@
+LOAD db/tiny.tbl;
+INSERT ( alpha_copy 9 9 ) FROM tiny;
+DUPLICATE ( ) FROM tiny;
+DUMP tiny tmp/tiny_after_first.tbl;
+DUPLICATE ( ) FROM tiny WHERE ( KEY = alpha_copy );
+DUPLICATE ( ) FROM tiny WHERE ( first = 9 ) ( second = 9 );
+DUPLICATE ( ) FROM tiny WHERE ( first > 100 );
+DUMP tiny tmp/tiny_after_second.tbl;
+LOAD db/empty.tbl;
+DUPLICATE ( ) FROM empty;
+DUMP empty tmp/empty_after_duplicate.tbl;
+QUIT;

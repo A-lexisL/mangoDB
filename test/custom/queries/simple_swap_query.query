@@ -1,0 +1,5 @@
+LOAD db/small.tbl;
+SWAP ( c5 c5 ) FROM small;
+SWAP ( c5 c6 ) FROM small;
+DUMP small tmp/swap_after.tbl;
+QUIT;

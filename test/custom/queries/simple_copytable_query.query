@@ -1,0 +1,4 @@
+LOAD db/tiny.tbl;
+COPYTABLE tiny tiny_copy;
+DUMP tiny_copy tmp/tiny_copy.tbl;
+QUIT;

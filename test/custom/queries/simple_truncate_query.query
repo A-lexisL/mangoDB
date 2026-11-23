@@ -1,0 +1,4 @@
+LOAD db/tiny.tbl;
+TRUNCATE tiny;
+DUMP tiny tmp/tiny_empty.tbl;
+QUIT;
