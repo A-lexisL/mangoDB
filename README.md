@@ -91,4 +91,5 @@ Queries end with `;`. The input stream ends at EOF or QUIT; accepted work finish
 
 ## Authors
 
-Shirui Liang, Qiwei Gu, Minyu Cao
+[Shirui Liang](https://github.com/A-lexisL), [Qiwei Gu](https://github.com/lightblue113), Minyu Cao
+
